@@ -1,0 +1,93 @@
+
+.org-viewer {
+    padding-top:5px;
+    padding-left:5px;
+    white-space:pre;
+    background-color:black;
+    overflow-y:auto;
+}
+
+.org-sub {
+    display:none;
+}
+
+.org-content-sp {		/* 特殊：沒有 title 的 content, 永遠不隱藏 */
+    color:white;
+}
+
+.org-content {
+    display:none;
+    color:white;
+}
+
+.star1 {
+    color:#63b8ff;
+    cursor:default;
+}
+
+.star1:hover {
+    cursor:pointer;
+}
+
+.star2 {
+    color:#eedd82;
+    cursor:default;
+}
+
+.star2:hover {
+    cursor:pointer;
+}
+
+.star3 {
+    color:#00ffff;
+    cursor:default;
+}
+
+.star3:hover {
+    cursor:pointer;
+}
+
+.star4 {
+    color:#ff8c00;
+    cursor:default;
+}
+
+.star4:hover {
+    cursor:pointer;
+}
+
+.star5 {
+    color:#98fb98;
+    cursor:default;
+}
+
+.star5:hover {
+    cursor:pointer;
+}
+
+.star6 {
+    color:#7fffd4;
+    cursor:default;
+}
+
+.star6:hover {
+    cursor:pointer;
+}
+
+.star7 {
+    color:#d8bfd8;
+    cursor:default;
+}
+
+.star7:hover {
+    cursor:pointer;
+}
+
+.star8 {
+    color:#ffdab9;
+    cursor:default;
+}
+
+.star8:hover {
+    cursor:pointer;
+}

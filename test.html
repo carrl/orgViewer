@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TEST</title>
+    <link rel="stylesheet" type="text/css" href="jquery.orgviewer.css" />
+  </head>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+  <body>
+    <div id="org-mode" style="width:1000px; height:600px;">
+* Google Search Engine Tips
+** filetype:
+   If you include filetype:suffix in your query, Google will restrict the results to pages whose names end in suffix.
+*** ex: filetype:doc
+** inurl:
+   If you include inurl: in your query, Google will restrict the results to documents containing that word in the URL.
+*** ex: inurl: txt
+** intitle:
+   The query intitle:term restricts results to documents containing term in the title.
+*** ex: intitle:"index of"
+** site:
+   If you include site: in your query, Google will restrict your search results to the site or domain you specify.
+*** ex: site:edu.tw
+** cache:
+   The query cache:url will display Google’s cached version of a web page, instead of the current version of the page.
+** define:
+   If you start your query with define:, Google shows definitions from pages on the web for the term that follows.
+*** ex: define:phone
+* test
+  test1
+** test21
+** test22
+*** test3
+    TEST
+**** test4
+***** T51
+      TEST51
+***** T52
+****** test6
+******* test7
+******** test8      
+    </div>
+
+    <script type="text/javascript" src="jquery.orgviewer.js"></script>
+    <script>
+      jQuery("document").ready(function() {
+          jQuery("#org-mode").org_viewer();
+      });
+    </script>
+  </body>
+</html>
