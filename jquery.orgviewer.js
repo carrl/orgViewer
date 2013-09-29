@@ -6,11 +6,15 @@
 	var my_content = this.html();
 	var org_obj = org_parser(my_content, 1);
 	// show_org_obj(org_obj);
-	new_content = "<tt>" + org_html(org_obj, 1) + "</tt>";
+	var new_content = "<div id='org-toolbar'><input type='button' id='org-collapse-all' value='collapse all' /></div>";
+	new_content += "<div id='org-content'><tt>" + org_html(org_obj, 1) + "</tt></div>";
 
 	this.html(new_content);
 
+	this.find("#org-content").css("height", this.height() - this.find("#org-toolbar").outerHeight());
+
 	this.find("div[class^=star]").bind("click", function() {
+	    // alert("qq");
 	    // press (title) show (content)
 	    var org_next = $(this).next("div");
 
@@ -30,6 +34,15 @@
 		org_next.attr("lastclick", "0");
 	    }
 	});
+
+	this.find("#org-collapse-all").click(function() {
+	    // when button "collapse all" click
+	    var org_mode = $(this).parent().parent();
+	    var org_next = org_mode.find("#org-content div[class=star1]").next();
+	    org_next.attr("lastclick", "0").hide();
+	    org_next.find("div[class=org-content]").hide();
+	    org_next.find("div[class=org-sub]").hide();
+	});
     };
 
     function org_parser(content, star_cnt) {
@@ -46,7 +59,7 @@
 	var REG = eval("/^" + star+ " /m");
 
 	var my_list = my_content.split(REG);
-	
+
 	var star1 = star + "\\*";
 	var REG1 = eval("/^" + star1 + " /m");
 	if (my_list[0].trim() != "") {   // if first char is "*"
@@ -102,7 +115,7 @@
 	    if (typeof my_org_obj[i].content === "object") {
 		my_org_html += "<div class='org-sub'>" +org_html(my_org_obj[i].content, level+1) + "</div>";
 	    } else {
-		console.log(my_org_obj[i].content);
+		// console.log(my_org_obj[i].content);
 		if (my_org_obj[i].title.trim() != "") {
 		    my_org_html += "<div class='org-content'>" + my_org_obj[i].content + "</div>";
 		} else {		// no title
@@ -114,4 +127,3 @@
 	return my_org_html;
     }
 }) (jQuery);
-

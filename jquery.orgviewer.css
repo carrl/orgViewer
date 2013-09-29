@@ -1,5 +1,13 @@
 
 .org-viewer {
+}
+
+#org-toolbar {
+    background-color:#b0c4de;
+    padding:5px;
+}
+
+#org-content {
     padding-top:5px;
     padding-left:5px;
     white-space:pre;
