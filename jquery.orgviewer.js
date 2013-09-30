@@ -1,17 +1,22 @@
 
 ;(function($) {
     $.fn.org_viewer = function() {
+	var it = this;
 	this.addClass("org-viewer");
 
 	var my_content = this.html();
 	var org_obj = org_parser(my_content, 1);
 	// show_org_obj(org_obj);
-	var new_content = "<div id='org-toolbar'><input type='button' id='org-collapse-all' value='collapse all' /></div>";
-	new_content += "<div id='org-content'><tt>" + org_html(org_obj, 1) + "</tt></div>";
+	var new_content = "<div id='org-toolbar'>";
+	new_content += "<div style='float:left;'><input type='button' id='org-collapse-all' value='collapse all' /></div>";
+	new_content += "<div style='float:right;'><input type='text' id='org-search-word' />&nbsp;<input type='button' id='org-btn-search' value='search' /></div>";
+	new_content += "<div style='clear:both;'></div>";
+	new_content += "</div>";
+	new_content += "<div id='org-detail'><tt>" + org_html(org_obj, 1) + "</tt></div>";
 
 	this.html(new_content);
 
-	this.find("#org-content").css("height", this.height() - this.find("#org-toolbar").outerHeight() - parseInt(jQuery("#org-content").css("padding-top")));
+	this.find("#org-detail").css("height", this.height() - this.find("#org-toolbar").outerHeight() - parseInt(jQuery("#org-detail").css("padding-top")));
 
 	this.find("div[class^=star]").bind("click", function() {
 	    // press (title) show (content)
@@ -36,11 +41,20 @@
 
 	this.find("#org-collapse-all").click(function() {
 	    // when button "collapse all" click
-	    var org_mode = $(this).parent().parent();
-	    var org_next = org_mode.find("#org-content div[class=star1]").next();
+	    var org_next = it.find("#org-detail div[class=star1]").next();
 	    org_next.attr("lastclick", "0").hide();
 	    org_next.find("div[class=org-content]").hide();
 	    org_next.find("div[class=org-sub]").hide();
+	});
+
+	this.find("#org-btn-search").click(function() {
+	    // Search
+	    it.find("#org-collapse-all").click();
+	    var org_search_word = it.find("#org-search-word").val();
+
+	    it.find(":contains('" + org_search_word + "')").each(function() {
+		$(this).show();
+	    });
 	});
     }
 
