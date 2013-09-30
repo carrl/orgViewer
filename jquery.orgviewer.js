@@ -11,10 +11,9 @@
 
 	this.html(new_content);
 
-	this.find("#org-content").css("height", this.height() - this.find("#org-toolbar").outerHeight());
+	this.find("#org-content").css("height", this.height() - this.find("#org-toolbar").outerHeight() - parseInt(jQuery("#org-content").css("padding-top")));
 
 	this.find("div[class^=star]").bind("click", function() {
-	    // alert("qq");
 	    // press (title) show (content)
 	    var org_next = $(this).next("div");
 
@@ -43,7 +42,7 @@
 	    org_next.find("div[class=org-content]").hide();
 	    org_next.find("div[class=org-sub]").hide();
 	});
-    };
+    }
 
     function org_parser(content, star_cnt) {
 	// convert org-mode text to object
@@ -115,7 +114,6 @@
 	    if (typeof my_org_obj[i].content === "object") {
 		my_org_html += "<div class='org-sub'>" +org_html(my_org_obj[i].content, level+1) + "</div>";
 	    } else {
-		// console.log(my_org_obj[i].content);
 		if (my_org_obj[i].title.trim() != "") {
 		    my_org_html += "<div class='org-content'>" + my_org_obj[i].content + "</div>";
 		} else {		// no title

@@ -1,5 +1,6 @@
 
 .org-viewer {
+    border:1px solid;
 }
 
 #org-toolbar {
@@ -8,6 +9,7 @@
 }
 
 #org-content {
+    font-size:16px;
     padding-top:5px;
     padding-left:5px;
     white-space:pre;
@@ -19,7 +21,7 @@
     display:none;
 }
 
-.org-content-sp {		/* 特殊：沒有 title 的 content, 永遠不隱藏 */
+.org-content-sp {		/* special： content without title, never hidden */
     color:white;
 }
 
