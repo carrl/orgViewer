@@ -1,7 +1,6 @@
 
 ;(function($) {
     $.fn.org_viewer = function() {
-	var it = this;
 	this.addClass("org-viewer");
 
 	var my_content = this.html();
@@ -14,48 +13,7 @@
 	new_content += "</div>";
 	new_content += "<div id='org-detail'><tt>" + org_html(org_obj, 1) + "</tt></div>";
 
-	this.html(new_content);
-
-	this.find("#org-detail").css("height", this.height() - this.find("#org-toolbar").outerHeight() - parseInt(jQuery("#org-detail").css("padding-top")));
-
-	this.find("div[class^=star]").bind("click", function() {
-	    // press (title) show (content)
-	    var org_next = $(this).next("div");
-
-	    if (org_next.is(":hidden")) {
-		org_next.attr("lastclick", "1");
-		org_next.parents("div[lastclick=1]").attr("lastclick", "0");
-
-		org_next.show();
-	    } else {
-		if ((org_next.attr("lastclick") == 1) && (org_next.find("div[class^=org]").length>0)) {
-		    org_next.find("div").show();
-		} else {
-		    org_next.hide();
-		    org_next.find("div[class=org-content]").hide();
-		    org_next.find("div[class=org-sub]").hide();
-		}
-		org_next.attr("lastclick", "0");
-	    }
-	});
-
-	this.find("#org-collapse-all").click(function() {
-	    // when button "collapse all" click
-	    var org_next = it.find("#org-detail div[class=star1]").next();
-	    org_next.attr("lastclick", "0").hide();
-	    org_next.find("div[class=org-content]").hide();
-	    org_next.find("div[class=org-sub]").hide();
-	});
-
-	this.find("#org-btn-search").click(function() {
-	    // Search
-	    it.find("#org-collapse-all").click();
-	    var org_search_word = it.find("#org-search-word").val();
-
-	    it.find(":contains('" + org_search_word + "')").each(function() {
-		$(this).show();
-	    });
-	});
+	org_start(this, new_content);
     }
 
     function org_parser(content, star_cnt) {
@@ -137,5 +95,60 @@
 	}
 
 	return my_org_html;
+    }
+
+    function org_start($obj, content) {
+	$obj.html(content);
+
+	$obj.find("#org-detail").css("height", $obj.height() - $obj.find("#org-toolbar").outerHeight() - parseInt(jQuery("#org-detail").css("padding-top")));
+
+	$obj.find("div[class^=star]").bind("click", function() {
+	    // press (title) show (content)
+	    var org_next = $(this).next("div");
+
+	    if (org_next.is(":hidden")) {
+		org_next.attr("lastclick", "1");
+		org_next.parents("div[lastclick=1]").attr("lastclick", "0");
+
+		org_next.show();
+	    } else {
+		if ((org_next.attr("lastclick") == 1) && (org_next.find("div[class^=org]").length>0)) {
+		    org_next.find("div").show();
+		} else {
+		    org_next.hide();
+		    org_next.find("div[class=org-content]").hide();
+		    org_next.find("div[class=org-sub]").hide();
+		}
+		org_next.attr("lastclick", "0");
+	    }
+	});
+
+	$obj.find("#org-collapse-all").click(function() {
+	    // when button "collapse all" click
+	    var org_next = $obj.find("#org-detail div[class=star1]").next();
+	    org_next.attr("lastclick", "0").hide();
+	    org_next.find("div[class=org-content]").hide();
+	    org_next.find("div[class=org-sub]").hide();
+	});
+
+	$obj.find("#org-btn-search").click(function() {
+	    // Search
+	    var org_search_word = $obj.find("#org-search-word").val();
+	    if (org_search_word.trim() != "") {
+		var org_search_word_regex = eval("/" + org_search_word + "/g");
+
+		org_start($obj, content);
+
+		$obj.children("#org-detail").find(":contains('" + org_search_word + "')").each(function() {
+		    if ($(this).html().indexOf("<") == -1) {
+			var searched_content = $(this).html().replace(org_search_word_regex, "<span class='org-search-word'>" + org_search_word + "</span>");
+			$(this).html(searched_content);
+		    }
+		    $(this).show();
+		});
+	    } else {
+		org_start($obj, content);
+	    }
+	});
     }
 }) (jQuery);

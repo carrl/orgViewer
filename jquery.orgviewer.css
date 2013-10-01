@@ -101,3 +101,8 @@
 .star8:hover {
     cursor:pointer;
 }
+
+.org-search-word {
+    color:black;
+    background-color:yellow;
+}
