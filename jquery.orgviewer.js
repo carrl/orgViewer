@@ -1,9 +1,12 @@
 
 ;(function($) {
+    'use strict';
     $.fn.org_viewer = function() {
 	this.addClass("org-viewer");
 
 	var my_content = this.html();
+	my_content = my_content.replace(/(\r\n|\r|\n)/g, "\n"); // \r\n, \r, \n => \n
+	my_content = my_content.replace(/(https?:\/\/\S*)/g, "<a href='$1' target='_blank'>$1</a>");
 	var org_obj = org_parser(my_content, 1);
 	// show_org_obj(org_obj);
 	var new_content = "<div id='org-toolbar'>";
@@ -14,7 +17,7 @@
 	new_content += "<div id='org-detail'><tt>" + org_html(org_obj, 1) + "</tt></div>";
 
 	org_start(this, new_content);
-    }
+    };
 
     function org_parser(content, star_cnt) {
 	// convert org-mode text to object
@@ -22,7 +25,6 @@
 	var org_obj = [];
 	var my_content = content;
 
-	my_content = my_content.replace(/(\r\n|\r|\n)/g, "\n"); // \r\n, \r, \n => \n
 	var star = "";
 	for (var i=0; i<star_cnt; i++) {
 	    star += "\\*";
@@ -61,7 +63,7 @@
 	}
 
 	return org_obj;
-    }
+    };
 
     function show_org_obj(my_org_obj) {
 	// show org-mode object (console.log)
@@ -73,7 +75,7 @@
 		console.log(my_org_obj[i].content);
 	    }
 	}
-    }
+    };
 
     function org_html(my_org_obj, level) {
 	// convert org-mode object to HTML
@@ -95,7 +97,7 @@
 	}
 
 	return my_org_html;
-    }
+    };
 
     function org_start($obj, content) {
 	$obj.html(content);
@@ -150,5 +152,5 @@
 		org_start($obj, content);
 	    }
 	});
-    }
+    };
 }) (jQuery);
