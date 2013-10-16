@@ -6,6 +6,9 @@
 
 	var my_content = this.html();
 	my_content = my_content.replace(/(\r\n|\r|\n)/g, "\n"); // \r\n, \r, \n => \n
+	my_content = my_content.replace(/&/g, "&amp;");
+	my_content = my_content.replace(/</g, "&lt;");
+	my_content = my_content.replace(/>/g, "&gt;");
 	my_content = my_content.replace(/(https?:\/\/\S*)/g, "<a href='$1' target='_blank'>$1</a>");
 	var org_obj = org_parser(my_content, 1);
 	// show_org_obj(org_obj);

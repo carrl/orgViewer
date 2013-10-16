@@ -114,3 +114,7 @@ a:visited {
     color:black;
     background-color:yellow;
 }
+
+#org-collapse-all:hover {
+    cursor:pointer;
+}
