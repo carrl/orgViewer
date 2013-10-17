@@ -6,9 +6,8 @@
 
 	var my_content = this.html();
 	my_content = my_content.replace(/(\r\n|\r|\n)/g, "\n"); // \r\n, \r, \n => \n
-	my_content = my_content.replace(/&/g, "&amp;");
-	my_content = my_content.replace(/</g, "&lt;");
-	my_content = my_content.replace(/>/g, "&gt;");
+	my_content = html_escape(my_content);
+
 	my_content = my_content.replace(/(https?:\/\/\S*)/g, "<a href='$1' target='_blank'>$1</a>");
 	var org_obj = org_parser(my_content, 1);
 	// show_org_obj(org_obj);
@@ -20,6 +19,20 @@
 	new_content += "<div id='org-detail'><tt>" + org_html(org_obj, 1) + "</tt></div>";
 
 	org_start(this, new_content);
+    };
+
+    function html_escape(ahtml) {
+	var nhtml = ahtml;
+	nhtml = nhtml.replace(/&amp;/g, "&");
+	nhtml = nhtml.replace(/&quot;/g, "\"");
+	nhtml = nhtml.replace(/&lt;/g, "<");
+	nhtml = nhtml.replace(/&gt;/g, ">");
+	nhtml = nhtml.replace(/&/g, "&amp;");
+	nhtml = nhtml.replace(/\"/g, "&quot;");
+	nhtml = nhtml.replace(/</g, "&lt;");
+	nhtml = nhtml.replace(/>/g, "&gt;");
+
+	return nhtml;
     };
 
     function org_parser(content, star_cnt) {
